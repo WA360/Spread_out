@@ -1,8 +1,6 @@
 # 연관 페이지 추천 기능을 가진 PDF 뷰어 Spread out
 
-- 배포 URL : https://ohmycode-readme.netlify.app
-- Test ID : readme@test.com
-- Test PW : 123123
+- 배포URL : 
 
 <br>
 
