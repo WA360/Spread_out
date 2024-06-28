@@ -1,0 +1,96 @@
+# This is a basic workflow to help you get started with Actions
+name: CI/CD Workflow
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main","backend","front","python" ]
+  pull_request:
+    branches: [ "main" ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  front:
+    name: Frontend CI/CD
+    runs-on: junghwan_host
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/front'  # front 브랜치에 푸시될 때만 실행
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install dependencies
+      # run: npm install
+
+    - name: Build
+      # run: npm run build
+
+    - name: Deploy
+      # run: ./deploy.sh
+
+  backend:
+    name: Backend CI/CD
+    runs-on: junghwan_host
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/backend'  # backend 브랜치에 푸시될 때만 실행
+    defaults:
+      run:
+        working-directory: ./express-server
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        
+    - name: Install dependencies
+      # run: npm install
+
+    - name: Run tests
+      # run: npm test
+
+    - name: Build
+      # run: npm run build
+
+    - name: Deploy
+      # run: ./deploy.sh
+      
+  python:
+    name: Python CI/CD
+    runs-on: junghwan_host
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/python'  # python 브랜치에 푸시될 때만 실행
+    defaults:
+      run:
+        working-directory: ./django-server
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        
+    - name: Install dependencies
+      # run: npm install
+
+    - name: Run tests
+      # run: npm test
+
+    - name: Build
+      # run: npm run build
+
+    - name: Deploy
+      # run: ./deploy.sh
