@@ -3,8 +3,8 @@ version: '3.8'
 services:
   node:
     build: .
-    container_name: nmm_django
-    # command: python manage.py runserver 0.0.0.0:8000
+    image: nmm_django
+    # container_name: nmm_django
     ports:
       - "8000:8000"
     networks:

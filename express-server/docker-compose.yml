@@ -3,7 +3,8 @@ version: '3.8'
 services:
   node:
     build: .
-    container_name: nmm_backend
+    image: nmm_backend  # 이미지 이름 지정
+    # container_name: nmm_backend
     ports:
       - "4000:3000"
     networks:

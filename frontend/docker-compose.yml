@@ -3,7 +3,8 @@ version: '3.8'
 services:
   node:
     build: .
-    container_name: nmm_frontend
+    image: nmm_frontend
+    # container_name: nmm_frontend
     ports:
       - "5000:3000"
     networks:
