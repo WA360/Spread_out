@@ -63,12 +63,8 @@
 
 ```
 ├── README.md
-├── .eslintrc.js
-├── .gitignore
-├── .prettierrc.json
-├── package-lock.json
-├── package.json
 
+```
 
 <br>
 
