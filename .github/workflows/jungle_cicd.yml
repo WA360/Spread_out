@@ -28,14 +28,15 @@ jobs:
         with:
           node-version: "20.x"
 
-    # - name: Install dependencies
-    # run: npm install
+      - name: docker Down
+        run: docker-compose down
 
-    # - name: Build
-    # run: npm run build
+      - name: docker remove image
+        run: docker rmi nmm_backend
+        continue-on-error: true
 
-    # - name: Deploy
-    # run: ./deploy.sh
+      - name: docker up
+        run: docker-compose up -d --build
 
   backend:
     name: Backend CI/CD
@@ -65,7 +66,7 @@ jobs:
         run: docker build -t nmm_backend .
 
       - name: docker up
-        run: docker-compose up -d
+        run: docker-compose up -d --build
 
   python:
     name: Python CI/CD
