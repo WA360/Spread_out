@@ -5,17 +5,16 @@ name: CI/CD Workflow
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: ["main", "backend", "front", "python"]
+    branches: ["main", "backend", "frontend", "python"]
   pull_request:
     branches: ["main"]
-
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   front:
     name: Frontend CI/CD
     runs-on: self-hosted
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/front'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/frontend'
     defaults:
       run:
         working-directory: ./frontend
@@ -29,14 +28,15 @@ jobs:
         with:
           node-version: "20.x"
 
-    # - name: Install dependencies
-    # run: npm install
+      - name: docker Down
+        run: docker-compose down
 
-    # - name: Build
-    # run: npm run build
+      - name: docker remove image
+        run: docker rmi nmm_backend
+        continue-on-error: true
 
-    # - name: Deploy
-    # run: ./deploy.sh
+      - name: docker up
+        run: docker-compose up -d --build
 
   backend:
     name: Backend CI/CD
@@ -62,11 +62,8 @@ jobs:
         run: docker rmi nmm_backend
         continue-on-error: true
 
-      - name: docker build
-        run: docker build -t nmm_backend .
-
       - name: docker up
-        run: docker-compose up -d
+        run: docker-compose up -d --build
 
   python:
     name: Python CI/CD
@@ -80,19 +77,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      # - name: Set up python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.12"
 
-    # - name: Install dependencies
-    # run: npm install
+      - name: docker Down
+        run: docker-compose down
 
-    # - name: Run tests
-    # run: npm test
+      - name: docker remove image
+        run: docker rmi nmm_django
+        continue-on-error: true
 
-    # - name: Build
-    # run: npm run build
-
-    # - name: Deploy
-    # run: ./deploy.sh
+      - name: docker up
+        run: docker-compose up -d --build
