@@ -5,7 +5,7 @@ name: CI/CD Workflow
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: ["main", "backend", "front", "python"]
+    branches: ["main", "backend", "frontend", "python"]
   pull_request:
     branches: ["main"]
 
@@ -14,7 +14,7 @@ jobs:
   front:
     name: Frontend CI/CD
     runs-on: self-hosted
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/front'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/frontend'
     defaults:
       run:
         working-directory: ./frontend
