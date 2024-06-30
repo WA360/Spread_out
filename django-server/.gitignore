@@ -167,3 +167,5 @@ db.sqlite3
 
 .idea
 
+# 모든 pdf 파일 무시
+*.pdf
