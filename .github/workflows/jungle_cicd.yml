@@ -56,14 +56,14 @@ jobs:
       #     node-version: "20.x"
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
         run: docker rmi nmm_backend
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
   python:
     name: Python CI/CD
