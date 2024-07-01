@@ -75,9 +75,13 @@ WSGI_APPLICATION = "djangoserver.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jungle',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'host.docker.internal',  # 도커 내부에서 접근할 경우
+        'PORT': '3307',
     }
 }
 
