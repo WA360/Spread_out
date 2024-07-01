@@ -2,10 +2,10 @@ var mysql = require("mysql2");
 
 var connection = mysql.createConnection({
   // host: "localhost",
-  host: "host.docker.internal",
-  // host: "my-sql",
+  // host: "host.docker.internal",
+  host: "sql-db",
   user: "root",
-  port: 3307,
+  port: 3306,
   password: "1234",
   database: "jungle",
   // dateStrings: "date",
