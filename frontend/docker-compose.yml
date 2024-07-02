@@ -11,4 +11,6 @@ services:
 
 networks:
   jungle_network:
+    external: true
     driver: bridge
+    
