@@ -21,26 +21,26 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Set up node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
+      # - name: Set up node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "20.x"
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
-        run: docker rmi nmm_backend
+        run: docker rmi nmm_frontend
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
   backend:
     name: Backend CI/CD
-    runs-on: self-hosted
+    runs-on: Linux
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/backend'
     defaults:
       run:
@@ -50,20 +50,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
+      # - name: Set up node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "20.x"
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
         run: docker rmi nmm_backend
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
   python:
     name: Python CI/CD
@@ -83,11 +83,11 @@ jobs:
       #     python-version: "3.12"
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
         run: docker rmi nmm_django
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
