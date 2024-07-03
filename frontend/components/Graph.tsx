@@ -28,6 +28,7 @@ interface GraphProps {
 const Graph: React.FC<GraphProps> = ({ onNodeClick }) => {  // prop 추가
   const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState<GraphData | null>(null);
+  const [count, setCount] = useState<Number>(0);
 
   useEffect(() => {
     fetch('/graph_data.json')
@@ -37,6 +38,7 @@ const Graph: React.FC<GraphProps> = ({ onNodeClick }) => {  // prop 추가
   }, []);
 
   useEffect(() => {
+    if(count) return;
     if (!data || !svgRef.current) return;
 
     const width = 600;
@@ -121,7 +123,7 @@ const Graph: React.FC<GraphProps> = ({ onNodeClick }) => {  // prop 추가
     const initialTranslate: [number, number] = [width / 2, height / 2];  // 초기 이동 위치
 
     svg.call(zoom.transform, d3.zoomIdentity.translate(initialTranslate[0], initialTranslate[1]).scale(initialScale));
-
+    setCount(1);
   }, [data]);
 
   return (
