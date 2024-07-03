@@ -11,3 +11,18 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.link {
+  stroke: #90e0ef;
+  stroke-opacity: 0.8;
+  stroke-width: 30px;
+}
+.node circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+text {
+  font: 50px sans-serif;
+  color:yellow;
+  pointer-events: none;
+}
