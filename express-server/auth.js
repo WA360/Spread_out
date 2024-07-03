@@ -1,6 +1,5 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const secretKey = "jungle";
 
 function checkAuth(req, res, next) {
   const token = req.cookies.token;
@@ -9,7 +8,7 @@ function checkAuth(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, secretKey);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     req.user = decoded; // decoded 정보를 요청 객체에 저장
     next(); // 다음 미들웨어 또는 라우트 핸들러로 이동
   } catch (error) {
@@ -19,7 +18,9 @@ function checkAuth(req, res, next) {
 
 function makeToken(tokenInfo) {
   const payload = { userName: tokenInfo[0].name, userId: tokenInfo[0].email };
-  return (token = jwt.sign(payload, secretKey, { expiresIn: "15m" }));
+  return (token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "15m",
+  }));
 }
 
 module.exports = {
