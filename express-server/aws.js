@@ -39,6 +39,7 @@ const imageUploader = multer({
 
 const editProfileImage = async (req, res) => {
   const filePath = req.file.location; // 업로드 된 이미지 경로
+  console.log("req.file:", req.file);
   if (!filePath) {
     throw new CustomError({
       status: 401,
@@ -47,10 +48,11 @@ const editProfileImage = async (req, res) => {
       },
     });
   } else {
-    let params = [req.file.originalname, 1, req.file.location];
-    const profile = await fileDTO.insertPdfInfo(params);
-    console.log(profile);
-    res.status(200).send(profile);
+    // let params = [req.file.originalname, 1, req.file.location];
+    // const profile = await fileDTO.insertPdfInfo(params);
+    // console.log(profile);
+    // res.status(200).send(profile);
+    res.status(200).send(req.file);
   }
 };
 
