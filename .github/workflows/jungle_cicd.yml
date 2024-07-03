@@ -29,14 +29,14 @@ jobs:
       #     node-version: "20.x"
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
         run: docker rmi nmm_frontend
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
   backend:
     name: Backend CI/CD
@@ -111,11 +111,11 @@ jobs:
           cat .env
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
         run: docker rmi nmm_django
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
