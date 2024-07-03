@@ -1,15 +1,17 @@
+"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import LeftAside from "@/components/LeftAside";
+import { RecoilRoot } from "recoil";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Spread Out",
-  description: "Keep track of your expenses and income with Spread Out.",
-};
+// export const metadata: Metadata = {
+//   title: "Spread Out",
+//   description: "Keep track of your expenses and income with Spread Out.",
+// };
 
 export default function RootLayout({
   children,
@@ -19,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${inter.className} flex flex-col`}>
-        <Header />
-        <div className="flex flex-1">
-          <LeftAside />
-          <main className="w-full">{children}</main>
-        </div>
+        <RecoilRoot>
+          <Header />
+          <div className="flex flex-1">
+            <LeftAside />
+            <main className="w-full">{children}</main>
+          </div>
+        </RecoilRoot>
       </body>
     </html>
   );

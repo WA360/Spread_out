@@ -1,18 +1,13 @@
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
+"use client";
 
-const PDFReader = dynamic(() => import("../components/PDFReader"), {
-  ssr: false,
-});
+import PDFReader from "../components/PDFReader";
 
-const Home: NextPage = () => {
+const Page = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <main className="container mx-auto py-8">
-        <PDFReader />
-      </main>
+    <div className="flex">
+      <PDFReader />
     </div>
   );
 };
 
-export default Home;
+export default Page;

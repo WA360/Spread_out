@@ -1,20 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
+import { pdfFileState } from "../app/recoil";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
 const PDFReader: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
+  const pdfFile = useRecoilValue(pdfFileState);
   const [numPages, setNumPages] = useState<number | null>(null);
-
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) setFile(file);
-  };
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -22,15 +19,9 @@ const PDFReader: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <input
-        type="file"
-        onChange={onFileChange}
-        className="mb-4 p-2 border border-gray-300 rounded"
-        accept=".pdf"
-      />
-      {file && (
+      {pdfFile && (
         <Document
-          file={file}
+          file={pdfFile}
           onLoadSuccess={onDocumentLoadSuccess}
           className="border border-gray-300 rounded">
           <Page pageNumber={1} className="max-w-full h-auto" />
