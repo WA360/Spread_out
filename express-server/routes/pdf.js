@@ -19,8 +19,8 @@ router.get("/", async (req, res, next) => {
     console.log("connection: ", connection);
     console.log("url: ", url);
     let result = {
+      url: url[0].url,
       connection: connection,
-      url: url,
     };
     res.status(200).send(result);
   }
