@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const userDTO = require("../dto/userDTO");
 // import imageUploader from "../aws";
-const imageUploader = require("../aws");
+const { imageUploader, editProfileImage } = require("../aws");
 const uath = require("../auth");
 
 // 데이터 조회
@@ -37,8 +37,6 @@ router.get("/", uath.checkAuth, async (req, res, next) => {
   }
 });
 
-router.post("/test/image", imageUploader.single("image"), (req, res) => {
-  res.send("good!");
-});
+router.post("/upload", imageUploader.single("pdf"), editProfileImage);
 
 module.exports = router;

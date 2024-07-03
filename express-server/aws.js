@@ -5,6 +5,7 @@ const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 const path = require("path");
+const fileDTO = require("./dto/fileDTO");
 
 const s3 = new S3Client({
   region: "ap-northeast-2",
@@ -16,7 +17,8 @@ const s3 = new S3Client({
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 });
 
-const allowedExtensions = [".png", ".jpg", ".jpeg", ".bmp"];
+const allowedExtensions = [".png", ".jpg", ".jpeg", ".bmp", ".pdf"];
+// const allowedExtensions = [".pdf"];
 
 const imageUploader = multer({
   storage: multerS3({
@@ -35,5 +37,22 @@ const imageUploader = multer({
   }),
 });
 
-module.exports = imageUploader;
+const editProfileImage = async (req, res) => {
+  const filePath = req.file.location; // 업로드 된 이미지 경로
+  if (!filePath) {
+    throw new CustomError({
+      status: 401,
+      response: {
+        message: "Invalid file path",
+      },
+    });
+  } else {
+    let params = [req.file.originalname, 1, req.file.location];
+    const profile = await fileDTO.insertPdfInfo(params);
+    console.log(profile);
+    res.status(200).send(profile);
+  }
+};
+
+module.exports = { imageUploader, editProfileImage };
 // export default imageUploader;
