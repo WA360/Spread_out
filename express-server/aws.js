@@ -5,7 +5,6 @@ const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 const path = require("path");
-const fileDTO = require("./dto/fileDTO");
 
 const s3 = new S3Client({
   region: "ap-northeast-2",
@@ -37,24 +36,5 @@ const imageUploader = multer({
   }),
 });
 
-const editProfileImage = async (req, res) => {
-  const filePath = req.file.location; // 업로드 된 이미지 경로
-  // console.log("req.file:", req.file);
-  if (!filePath) {
-    throw new CustomError({
-      status: 401,
-      response: {
-        message: "Invalid file path",
-      },
-    });
-  } else {
-    let params = [req.file.originalname, 1, req.file.location];
-    const profile = await fileDTO.insertPdfInfo(params);
-    console.log(profile);
-    res.status(200).send(profile);
-    // res.status(200).send(req.file);
-  }
-};
-
-module.exports = { imageUploader, editProfileImage };
+module.exports = imageUploader;
 // export default imageUploader;
