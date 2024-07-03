@@ -33,7 +33,7 @@ const PDFReader: React.FC = () => {
           file={file}
           onLoadSuccess={onDocumentLoadSuccess}
           className="border border-gray-300 rounded">
-          <Page pageNumber={121} className="max-w-full h-auto" />
+          <Page pageNumber={1} className="max-w-full h-auto" />
         </Document>
       )}
       {numPages && (
