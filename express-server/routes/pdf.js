@@ -63,8 +63,11 @@ router.post("/upload", imageUploader.single("pdf"), async (req, res) => {
     let params = [req.file.originalname, 1, filePath];
     const profile = await fileDTO.insertPdfInfo(params);
     console.log(profile);
-
-    res.status(200).send(profile);
+    let result = {
+      result: "업로드 성공!",
+      insertId: profile.insertId,
+    };
+    res.status(200).send(result);
     // res.status(200).send(req.file);
   }
 });
