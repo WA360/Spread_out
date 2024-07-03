@@ -1,3 +1,10 @@
+import PDFViewer from "../components/PDFViewer";
+
 export default function Home() {
-  return <main>Spread Out Test</main>;
+  return (
+    <div>
+      <h1>PDF Viewer Example</h1>
+      <PDFViewer file="/public/pdf" />
+    </div>
+  );
 }
