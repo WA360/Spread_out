@@ -1,37 +1,47 @@
 from PyPDF2 import PdfReader
 import logging
+import boto3
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 from sentence_transformers import SentenceTransformer
 import numpy as np
 from .models import PDFFile, PageConnection
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
 class RecommendView(APIView):
     def post(self, request):
         try:
-            # 파일 존재 여부 확인
-            if 'file' not in request.FILES:
-                logger.error("No file found in request.FILES")
-                return Response({"error": "No file provided."}, status=status.HTTP_400_BAD_REQUEST)
+            # 파일 위치 정보 확인
+            if 'file_key' not in request.data:
+                logger.error("No file_key found in request.data")
+                return Response({"error": "No file key provided."}, status=status.HTTP_400_BAD_REQUEST)
 
-            file = request.FILES['file']
-            file_name = file.name
+            file_key = request.data['file_key']
+            file_name = file_key.split('/')[-1]
 
-            # 파일 저장
-            file_path = default_storage.save(file_name, ContentFile(file.read()))
-            logger.info(f"File saved to {file_path}")
+            # S3 클라이언트 생성
+            s3_client = boto3.client(
+                's3',
+                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                region_name=settings.AWS_S3_REGION_NAME
+            )
+
+            # S3에서 파일 가져오기
+            file_obj = s3_client.get_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)
+            file_content = file_obj['Body'].read()
+
+            logger.info(f"File {file_key} fetched from S3")
 
             # PDFFile 객체 생성
             pdf_file = PDFFile.objects.create(filename=file_name)
             logger.info(f"PDFFile object created with id {pdf_file.id}")
 
             # PDF 파일에서 텍스트 추출
-            pdf = PdfReader(file_path)  # PdfFileReader를 PdfReader로 변경
+            pdf = PdfReader(file_content)
             pages_text = []
             for page_num in range(len(pdf.pages)):
                 page = pdf.pages[page_num]
