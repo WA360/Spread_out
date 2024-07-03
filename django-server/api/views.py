@@ -1,6 +1,7 @@
 from PyPDF2 import PdfReader
 import logging
 import boto3
+from io import BytesIO
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -31,17 +32,23 @@ class RecommendView(APIView):
             )
 
             # S3에서 파일 가져오기
-            file_obj = s3_client.get_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)
-            file_content = file_obj['Body'].read()
+            try:
+                file_obj = s3_client.get_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)
+                file_content = file_obj['Body'].read()
+                logger.info(f"File {file_key} fetched from S3")
+            except s3_client.exceptions.NoSuchKey:
+                logger.error(f"File key {file_key} does not exist in S3.")
+                return Response({"error": "File not found in S3."}, status=status.HTTP_404_NOT_FOUND)
 
-            logger.info(f"File {file_key} fetched from S3")
+            # 파일 내용을 BytesIO 객체로 변환
+            file_io = BytesIO(file_content)
 
             # PDFFile 객체 생성
             pdf_file = PDFFile.objects.create(filename=file_name)
             logger.info(f"PDFFile object created with id {pdf_file.id}")
 
             # PDF 파일에서 텍스트 추출
-            pdf = PdfReader(file_content)
+            pdf = PdfReader(file_io)  # BytesIO 객체를 PdfReader에 전달
             pages_text = []
             for page_num in range(len(pdf.pages)):
                 page = pdf.pages[page_num]
