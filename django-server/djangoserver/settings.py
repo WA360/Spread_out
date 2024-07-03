@@ -80,8 +80,8 @@ DATABASES = {
         'NAME': 'jungle',
         'USER': 'root',
         'PASSWORD': '1234',
-        'HOST': 'host.docker.internal',  # 도커 내부에서 접근할 경우
-        'PORT': '3307',
+        'HOST': 'sql-db',
+        'PORT': '3306',
     }
 }
 
