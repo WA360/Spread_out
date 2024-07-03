@@ -29,19 +29,22 @@ jobs:
       #     node-version: "20.x"
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
         run: docker rmi nmm_frontend
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
   backend:
     name: Backend CI/CD
     runs-on: Linux
+<<<<<<< HEAD
     environment: JUNGLE_SECRET
+=======
+>>>>>>> ed909f2beb4fd87bc4bd4241624d5af7bb08eb63
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/backend'
     defaults:
       run:
@@ -55,6 +58,7 @@ jobs:
       #   uses: actions/setup-node@v4
       #   with:
       #     node-version: "20.x"
+<<<<<<< HEAD
 
       - name: Create .env file
         run: |
@@ -65,6 +69,8 @@ jobs:
           echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> .env 
           echo "AWS_BUCKET=${{ secrets.AWS_BUCKET }}" >> .env 
           cat .env
+=======
+>>>>>>> ed909f2beb4fd87bc4bd4241624d5af7bb08eb63
 
       - name: docker Down
         run: docker compose down
@@ -94,11 +100,11 @@ jobs:
       #     python-version: "3.12"
 
       - name: docker Down
-        run: docker-compose down
+        run: docker compose down
 
       - name: docker remove image
         run: docker rmi nmm_django
         continue-on-error: true
 
       - name: docker up
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
