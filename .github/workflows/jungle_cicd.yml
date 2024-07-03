@@ -104,10 +104,10 @@ jobs:
           echo "AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_BUCKET }}" >> .env 
           echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> .env 
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env 
-          echo "DATABASE_ENGINE=$DATABASE_ENGINE" >> .env 
-          echo "DATABASE_NAME=$DATABASE_NAME" >> .env 
-          echo "DATABASE_HOST=$DATABASE_HOST" >> .env 
-          echo "DATABASE_PORT=$DATABASE_PORT" >> .env 
+          echo DATABASE_ENGINE=$DATABASE_ENGINE >> .env 
+          echo DATABASE_NAME=$DATABASE_NAME >> .env 
+          echo DATABASE_HOST=$DATABASE_HOST >> .env 
+          echo DATABASE_PORT=$DATABASE_PORT >> .env 
           cat .env
 
       - name: docker Down
