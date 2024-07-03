@@ -78,7 +78,7 @@ jobs:
 
   python:
     name: Python CI/CD
-    runs-on: self-hosted
+    runs-on: Linux
     environment: JUNGLE_SECRET
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/python'
     defaults:
@@ -96,6 +96,7 @@ jobs:
 
       - name: Create .env file
         run: |
+          echo "SECRET_KEY=${{ secrets.PYTHON_SECRET_KEY }}" >> .env 
           echo "ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}" >> .env 
           echo "REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }}" >> .env 
           echo "AWS_ACCESS_KEY_ID=${{ secrets.S3_ACCESS_KEY }}" >> .env 
