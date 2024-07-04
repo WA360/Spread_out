@@ -3,8 +3,8 @@ var mysql = require("mysql2");
 var connection = mysql.createConnection({
   // host: "localhost",
   // host: "host.docker.internal",
-  host: "sql-db",
-  // host: "ec2-3-38-176-179.ap-northeast-2.compute.amazonaws.com",
+  // host: "sql-db",
+  host: "ec2-3-38-176-179.ap-northeast-2.compute.amazonaws.com",
   user: "root",
   port: 3306,
   password: "1234",

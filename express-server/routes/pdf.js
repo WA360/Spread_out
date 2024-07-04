@@ -18,6 +18,10 @@ router.get("/", async (req, res, next) => {
     let url = await fileDTO.readPdfUrl(params);
     // console.log("connection: ", connection);
     // console.log("url: ", url);
+    if (!url.length > 0) {
+      res.status(400).send({ result: "해당 번호 결과 없음" });
+      return;
+    }
     let result = {
       url: url[0].url,
       connection: connection,
