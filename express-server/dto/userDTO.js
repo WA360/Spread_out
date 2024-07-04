@@ -3,7 +3,7 @@ const db = require("../db");
 const conn = db.connection;
 
 function login(params) {
-  let sql = `select ut.userId ,ut.name, ut.email, ut.password from jungle_user ut where ut.email = ?`;
+  let sql = `select au.id ,au.username , au.password from auth_user au where au.username = ?;`;
   return new Promise((resolve, reject) => {
     conn.query(sql, params, (err, rows, fields) => {
       if (err) reject(err);
@@ -13,7 +13,7 @@ function login(params) {
 }
 
 function signin(params) {
-  let sql = `insert into jungle_user(email,password,name) values(?,?,?)`;
+  let sql = `insert into auth_user (username,password) values (?,?)`;
   return new Promise((resolve, reject) => {
     conn.query(sql, params, (err, rows, fields) => {
       if (err) {
@@ -27,7 +27,7 @@ function signin(params) {
 }
 
 function getAllUser() {
-  let sql = `select ut.id ,ut.name from jungle_user ut`;
+  let sql = `select au.username from auth_user au;`;
   return new Promise((resolve, reject) => {
     conn.query(sql, (err, rows, fields) => {
       if (err) reject(err);
@@ -37,7 +37,7 @@ function getAllUser() {
 }
 
 function checkUserId(params) {
-  let sql = `select ut.email from jungle_user ut where ut.email = ?`;
+  let sql = `select au.username from auth_user au where au.username = ?`;
   return new Promise((resolve, reject) => {
     conn.query(sql, params, (err, rows, fields) => {
       if (err) reject(err);

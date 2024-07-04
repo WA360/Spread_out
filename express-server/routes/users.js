@@ -18,7 +18,7 @@ router.get("/", uath.checkAuth, async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     let params = [
-      req.body.email,
+      req.body.id,
       // req.body.userPassword,
     ];
     var userInfo = await userDTO.login(params);
@@ -65,10 +65,10 @@ router.post("/login", async (req, res, next) => {
 
 // 회원가입
 router.post("/signin", (req, res, next) => {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(req.body.email)) {
-    return res.status(400).send({ error: "Invalid email format" });
-  }
+  // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // if (!emailPattern.test(req.body.email)) {
+  //   return res.status(400).send({ error: "Invalid email format" });
+  // }
   try {
     bcrypt.hash(req.body.password, saltRounds, async function (err, hash) {
       if (err) {
@@ -76,7 +76,7 @@ router.post("/signin", (req, res, next) => {
       }
       console.log("Hashed password:", hash);
       // 이후 해시된 비밀번호를 데이터베이스에 저장하는 등의 작업을 수행합니다.
-      let params = [req.body.email, hash, req.body.name];
+      let params = [req.body.id, hash];
       try {
         let result = await userDTO.signin(params);
         console.log("결과결과: ", result);
@@ -87,7 +87,7 @@ router.post("/signin", (req, res, next) => {
         }
       } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
-          res.status(409).send({ error: "Email already exists" });
+          res.status(409).send({ error: "id already exists" });
         } else {
           res
             .status(500)
@@ -106,7 +106,7 @@ router.post("/signin", (req, res, next) => {
 // 아이디 중복 체크
 router.get("/signin/checkid", async (req, res, next) => {
   try {
-    let params = [req.query.email];
+    let params = [req.query.id];
     var userInfo = await userDTO.checkUserId(params);
     if (userInfo.length > 0) {
       res.status(409).send({ result: "아이디 중복임" });
