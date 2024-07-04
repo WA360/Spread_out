@@ -9,21 +9,29 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 from .models import PDFFile, PageConnection
 from django.conf import settings
+from django.contrib.auth.models import User  # Assuming you're using Django's built-in User model
 
 logger = logging.getLogger(__name__)
 
 class RecommendView(APIView):
     def post(self, request):
         try:
-            # 파일 위치 정보 확인
-            if 'file_key' not in request.data:
-                logger.error("No file_key found in request.data")
-                return Response({"error": "No file key provided."}, status=status.HTTP_400_BAD_REQUEST)
+            # 파일 및 유저 ID 정보 확인
+            if 'file' not in request.FILES or 'user_id' not in request.data:
+                logger.error("File or user_id not found in request")
+                return Response({"error": "File and user ID must be provided."}, status=status.HTTP_400_BAD_REQUEST)
 
-            file_key = request.data['file_key']
-            file_name = file_key.split('/')[-1]
+            file = request.FILES['file']
+            user_id = request.data['user_id']
 
-            # S3 클라이언트 생성
+            # 유저 확인
+            try:
+                user = User.objects.get(pk=user_id)
+            except User.DoesNotExist:
+                logger.error(f"User with ID {user_id} does not exist.")
+                return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+            file_name = file.name
             s3_client = boto3.client(
                 's3',
                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
@@ -31,23 +39,22 @@ class RecommendView(APIView):
                 region_name=settings.AWS_S3_REGION_NAME
             )
 
-            # S3에서 파일 가져오기
+            # S3에 파일 업로드
             try:
-                file_obj = s3_client.get_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)
-                file_content = file_obj['Body'].read()
-                logger.info(f"File {file_key} fetched from S3")
-            except s3_client.exceptions.NoSuchKey:
-                logger.error(f"File key {file_key} does not exist in S3.")
-                return Response({"error": "File not found in S3."}, status=status.HTTP_404_NOT_FOUND)
-
-            # 파일 내용을 BytesIO 객체로 변환
-            file_io = BytesIO(file_content)
+                s3_client.upload_fileobj(file, settings.AWS_STORAGE_BUCKET_NAME, file_name)
+                file_url = f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.{settings.AWS_S3_REGION_NAME}.amazonaws.com/{file_name}"
+                logger.info(f"File {file_name} uploaded to S3 at {file_url}")
+            except Exception as e:
+                logger.error(f"Failed to upload file to S3: {e}")
+                return Response({"error": "Failed to upload file to S3."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
             # PDFFile 객체 생성
-            pdf_file = PDFFile.objects.create(filename=file_name)
+            pdf_file = PDFFile.objects.create(filename=file_name, user=user, url=file_url)
             logger.info(f"PDFFile object created with id {pdf_file.id}")
 
             # PDF 파일에서 텍스트 추출
+            file_content = file.read()
+            file_io = BytesIO(file_content)
             pdf_document = fitz.open(stream=file_io, filetype="pdf")
             pages_text = []
             for page_num in range(len(pdf_document)):
