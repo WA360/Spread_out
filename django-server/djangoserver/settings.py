@@ -72,7 +72,7 @@ DATABASES = {
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
+        'HOST': "ec2-3-38-176-179.ap-northeast-2.compute.amazonaws.com",
         'PORT': env('DATABASE_PORT'),
     }
 }
