@@ -23,7 +23,7 @@ function readPdfInfo(params) {
 }
 
 function readPdfUrl(params) {
-  let sql = `select jf.url from jungle_file jf where jf.fileId =?;`;
+  let sql = `select ap.url from api_pdffile ap where ap.id =?;`;
   return new Promise((resolve, reject) => {
     conn.query(sql, params, (err, rows, fields) => {
       if (err) reject(err);

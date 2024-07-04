@@ -15,11 +15,11 @@ router.get("/", async (req, res, next) => {
     const params = [req.query.pdfId];
 
     let connection = await fileDTO.readPdfInfo(params);
-    // let url = await fileDTO.readPdfUrl(params);
-    console.log("connection: ", connection);
+    let url = await fileDTO.readPdfUrl(params);
+    // console.log("connection: ", connection);
     // console.log("url: ", url);
     let result = {
-      // url: url[0].url,
+      url: url[0].url,
       connection: connection,
     };
     res.status(200).send(result);
