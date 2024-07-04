@@ -1,4 +1,4 @@
-from PyPDF2 import PdfReader
+import fitz  # PyMuPDF
 import logging
 import boto3
 from io import BytesIO
@@ -48,12 +48,12 @@ class RecommendView(APIView):
             logger.info(f"PDFFile object created with id {pdf_file.id}")
 
             # PDF 파일에서 텍스트 추출
-            pdf = PdfReader(file_io)  # BytesIO 객체를 PdfReader에 전달
+            pdf_document = fitz.open(stream=file_io, filetype="pdf")
             pages_text = []
-            for page_num in range(len(pdf.pages)):
-                page = pdf.pages[page_num]
-                pages_text.append(page.extract_text())
-
+            for page_num in range(len(pdf_document)):
+                page = pdf_document.load_page(page_num)
+                pages_text.append(page.get_text())
+            
             logger.info(f"Extracted text from {len(pages_text)} pages")
 
             # Sentence-BERT 모델 로드
