@@ -1,65 +1,72 @@
-// import {
-//   BedrockRuntimeClient,
-//   InvokeModelCommand,
-//   InvokeModelCommandInput,
-//   InvokeModelCommandOutput,
-//   InvokeModelWithResponseStreamCommand,
-//   InvokeModelWithResponseStreamCommandInput,
-//   InvokeModelWithResponseStreamCommandOutput,
-// } from "@aws-sdk/client-bedrock-runtime";
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
-// import {
-//   BedrockClient,
-//   CreateModelCustomizationJobCommand,
-//   GetModelCustomizationJobCommand,
-//   ListFoundationModelsCommand,
-//   CreateModelCustomizationJobCommandInput,
-//   CreateModelCustomizationJobCommandOutput,
-//   GetModelCustomizationJobCommandInput,
-//   GetModelCustomizationJobCommandOutput,
-//   ListFoundationModelsCommandInput,
-//   ListFoundationModelsCommandOutput,
-// } from "@aws-sdk/client-bedrock";
+// snippet-start:[javascript.v3.bedrock-runtime.InvokeModel_Llama3_Quickstart]
+// Send a prompt to Meta Llama 3 and print the response.
 
-// const client = new BedrockRuntimeClient({
-//   region: process.env.REGION || "us-east-1",
-// });
-// const client = new BedrockClient({ region: process.env.REGION || "us-east-1" });
-// const MODEL_ID = process.env.MODEL_ID || "anthropic.claude-instant-v1";
-// const PROMPT = process.env.PROMPT || "Hi, who are you?";
+const {
+  BedrockRuntimeClient,
+  InvokeModelCommand,
+} = require("@aws-sdk/client-bedrock-runtime");
 
-// const params: InvokeModelWithResponseStreamCommandInput = {
-//   modelId: MODEL_ID,
-//   contentType: "application/json",
-//   accept: "application/json",
-//   body: JSON.stringify({
-//     prompt: `Human:${PROMPT}Assistant:`,
-//     max_tokens_to_sample: 300,
-//     temperature: 0.5,
-//     top_k: 250,
-//     top_p: 1,
-//   }),
-// };
-// const command = new InvokeModelWithResponseStreamCommand(param);
-// const res = await client.send(command);
+async function llm(req, res) {
+  // Create a Bedrock Runtime client in the AWS Region of your choice.
+  const client = new BedrockRuntimeClient({
+    region: "us-east-1",
+    credentials: {
+      accessKeyId: process.env.BEDROCK_ACCESS_KEY ?? "",
+      secretAccessKey: process.env.BEDROCK_SECRET_ACCESS_KEY ?? "",
+    },
+  });
 
-// const chunks = [];
+  // Set the model ID, e.g., Llama 3 8B Instruct.
+  const modelId = "meta.llama3-8b-instruct-v1:0";
 
-// for await (const event of res.body) {
-//   if (event.chunk && event.chunk.bytes) {
-//     const chunk = JSON.parse(Buffer.from(event.chunk.bytes).toString("utf-8"));
-//     chunks.push(chunk.completion); // change this line
-//   } else if (
-//     event.internalServerException ||
-//     event.modelStreamErrorException ||
-//     event.throttlingException ||
-//     event.validationException
-//   ) {
-//     console.error(event);
-//     break;
-//   }
-// }
-// console.log({
-//   prompt: PROMPT,
-//   completion: chunks.join(""),
-// });
+  // Define the user message to send.
+  // const userMessage =
+  //   "Describe the purpose of a 'hello world' program in one sentence.";
+  const userMessage = "프로세스에 대해서 설명해줘";
+
+  // Embed the message in Llama 3's prompt format.
+  const prompt = `
+  <|begin_of_text|>
+  <|start_header_id|>user<|end_header_id|>
+  ${userMessage}
+  <|eot_id|>
+  <|start_header_id|>assistant<|end_header_id|>
+  `;
+
+  // Format the request payload using the model's native structure.
+  const request = {
+    prompt,
+    // Optional inference parameters:
+    max_gen_len: 512,
+    temperature: 0.5,
+    top_p: 0.9,
+  };
+
+  // Encode and send the request.
+  const response = await client.send(
+    new InvokeModelCommand({
+      contentType: "application/json",
+      body: JSON.stringify(request),
+      modelId,
+    })
+  );
+
+  // Decode the native response body.
+  /** @type {{ generation: string }} */
+  const nativeResponse = JSON.parse(new TextDecoder().decode(response.body));
+
+  // Extract and print the generated text.
+  const responseText = nativeResponse.generation;
+  console.log(responseText);
+  res.send({
+    response: responseText,
+  });
+  // Learn more about the Llama 3 prompt format at:
+  // https://llama.meta.com/docs/model-cards-and-prompt-formats/meta-llama-3/#special-tokens-used-with-meta-llama-3
+  // snippet-end:[javascript.v3.bedrock-runtime.InvokeModel_Llama3_Quickstart]
+}
+
+module.exports = llm;

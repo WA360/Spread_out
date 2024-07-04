@@ -50,26 +50,26 @@ router.get("/", async (req, res, next) => {
 //   }
 // });
 
-router.post("/upload", imageUploader.single("pdf"), async (req, res) => {
-  const filePath = req.file.location; // 업로드 된 이미지 경로
-  if (!filePath) {
-    throw new CustomError({
-      status: 401,
-      response: {
-        message: "Invalid file path",
-      },
-    });
-  } else {
-    let params = [req.file.originalname, 1, filePath];
-    const profile = await fileDTO.insertPdfInfo(params);
-    console.log(profile);
-    let result = {
-      result: "업로드 성공!",
-      insertId: profile.insertId,
-    };
-    res.status(200).send(result);
-    // res.status(200).send(req.file);
-  }
-});
+// router.post("/upload", imageUploader.single("pdf"), async (req, res) => {
+//   const filePath = req.file.location; // 업로드 된 이미지 경로
+//   if (!filePath) {
+//     throw new CustomError({
+//       status: 401,
+//       response: {
+//         message: "Invalid file path",
+//       },
+//     });
+//   } else {
+//     let params = [req.file.originalname, 1, filePath];
+//     const profile = await fileDTO.insertPdfInfo(params);
+//     console.log(profile);
+//     let result = {
+//       result: "업로드 성공!",
+//       insertId: profile.insertId,
+//     };
+//     res.status(200).send(result);
+//     // res.status(200).send(req.file);
+//   }
+// });
 
 module.exports = router;
