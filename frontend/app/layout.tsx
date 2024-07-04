@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import LeftAside from "@/components/LeftAside";
-import RecoilProvider from "@/components/RecoilProvider";
+import Providers from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +20,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${inter.className} flex flex-col`}>
-        <RecoilProvider>
+        <Providers>
           <Header />
           <div className="flex flex-1">
             <LeftAside />
             <main className="w-full">{children}</main>
           </div>
-        </RecoilProvider>
+        </Providers>
       </body>
     </html>
   );
