@@ -1,9 +1,9 @@
-const db = require("../db");
+const db = require("../db/db");
 
 const conn = db.connection;
 
 function login(params) {
-  let sql = `select au.id ,au.username , au.password from auth_user au where au.username = ?;`;
+  let sql = `select au.id as uuid ,au.username as id , au.password,au.first_name as name from auth_user au where au.username = ?;`;
   return new Promise((resolve, reject) => {
     conn.query(sql, params, (err, rows, fields) => {
       if (err) reject(err);
@@ -13,7 +13,7 @@ function login(params) {
 }
 
 function signin(params) {
-  let sql = `insert into auth_user (username,password) values (?,?)`;
+  let sql = `insert into auth_user (username,password,first_name) values (?,?,?)`;
   return new Promise((resolve, reject) => {
     conn.query(sql, params, (err, rows, fields) => {
       if (err) {

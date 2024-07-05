@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var db = require("../db");
-var elastic = require("../elastic");
-let llm = require("../llm");
+var db = require("../db/db");
+var elastic = require("../db/elastic");
+let llm = require("../ai/llm");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {

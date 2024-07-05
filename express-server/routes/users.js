@@ -17,10 +17,7 @@ router.get("/", uath.checkAuth, async (req, res, next) => {
 // 로그인
 router.post("/login", async (req, res, next) => {
   try {
-    let params = [
-      req.body.id,
-      // req.body.userPassword,
-    ];
+    let params = [req.body.id];
     var userInfo = await userDTO.login(params);
     console.log("userInfo:", userInfo);
     if (userInfo.length > 0) {
@@ -44,7 +41,9 @@ router.post("/login", async (req, res, next) => {
               sameSite: "strict", // 이 옵션은 CSRF 공격을 방지하는 데 도움을 줍니다.
               maxAge: 24 * 60 * 60 * 1000, // 쿠키의 만료 시간 (예: 24시간)
             });
-            res.status(200).send({ result: "로그인 성공!" });
+            res
+              .status(200)
+              .send({ result: "로그인 성공!", name: userInfo[0].name });
             return;
           } else {
             res.status(400).send({ result: "이메일 혹은 비밀번호 오류" });
@@ -76,7 +75,7 @@ router.post("/signin", (req, res, next) => {
       }
       console.log("Hashed password:", hash);
       // 이후 해시된 비밀번호를 데이터베이스에 저장하는 등의 작업을 수행합니다.
-      let params = [req.body.id, hash];
+      let params = [req.body.id, hash, req.body.name];
       try {
         let result = await userDTO.signin(params);
         console.log("결과결과: ", result);
