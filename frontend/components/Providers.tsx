@@ -29,7 +29,7 @@ export default function Providers({ children }: { children: ReactNode }) {
           <ReactQueryDevtoolsProduction />
         </React.Suspense>
       )}
-      <RecoilRoot>{children}</RecoilRoot>;
+      <RecoilRoot>{children}</RecoilRoot>
     </QueryClientProvider>
   );
 }

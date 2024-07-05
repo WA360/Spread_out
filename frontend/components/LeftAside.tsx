@@ -1,7 +1,7 @@
 "use client";
 
 import { useRecoilState } from "recoil";
-import { pdfFileState } from "../app/recoil";
+import { pdfFileState } from "../recoil/atoms";
 
 const LeftAside = () => {
   const [pdfFile, setPdfFile] = useRecoilState(pdfFileState);

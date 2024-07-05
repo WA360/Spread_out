@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "@/app/recoil";
+import { User } from "@/recoil/atoms";
 
 interface LoginResponse {
   user: User;

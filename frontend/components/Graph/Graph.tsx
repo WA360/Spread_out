@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import { useQuery } from "@tanstack/react-query";
-import { fetchPdf, DataResponse } from "@/app/api/getPdf";
+import { fetchPdf, DataResponse } from "./getPdf";
 
 interface Node {
   id: string;

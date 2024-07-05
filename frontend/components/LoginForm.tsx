@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { authAtom } from "@/app/recoil";
-import { loginUser } from "@/app/api/authApi";
+import { authAtom } from "@/recoil/atoms";
+import { loginUser } from "@/app/(authentication)/login/authApi";
 
 interface LoginResponse {
   user: {
