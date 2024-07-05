@@ -16,6 +16,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".", // 추가된 부분
     "plugins": [
       {
         "name": "next"
@@ -24,7 +25,7 @@
     "paths": {
       "@/*": [
         "./*"
-      ]
+      ],
     }
   },
   "include": [
