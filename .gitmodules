@@ -1,0 +1,12 @@
+[submodule "SpreadoutBot"]
+	path = SpreadoutBot
+	url = https://github.com/WA360/SpreadoutBot
+[submodule "SpreadoutFront"]
+	path = SpreadoutFront
+	url = https://github.com/WA360/SpreadoutFront
+[submodule "SpreadoutBack"]
+	path = SpreadoutBack
+	url = https://github.com/WA360/SpreadoutBack
+[submodule "SpreadoutPython"]
+	path = SpreadoutPython
+	url = https://github.com/WA360/SpreadoutPython
