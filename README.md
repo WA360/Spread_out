@@ -30,7 +30,7 @@
 - 챕터의 요약 및 중요 키워드를 보여줍니다.
 <br>
 
-<img src="https://github.com/user-attachments/assets/f35d1cba-a1a0-4a1d-abd4-49c269463ccb" width="629">
+<img src="https://github.com/user-attachments/assets/5da9aa43-1dac-4b4c-b573-3630c5de1673" width="629">
 <br>
 
 - 업로드한 책의 내용을 참조하여 답변해주는 ai 챗봇 기능을 제공합니다.
