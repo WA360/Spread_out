@@ -124,7 +124,10 @@
 
 ### 작업 관리
 
-- GoogleSpreadsheet로 간트차트를 만들어 기록하였습니다. [링크](https://docs.google.com/spreadsheets/d/1LBbtSqFAAMMCywpo4yHLF9gwZQTe6Wz7mb-YO_833oo/edit?usp=sharing)
+GoogleSpreadsheet로 간트차트를 만들어 기록하였습니다. [링크](https://docs.google.com/spreadsheets/d/1LBbtSqFAAMMCywpo4yHLF9gwZQTe6Wz7mb-YO_833oo/edit?usp=sharing)
+
+![프로젝트관리](https://github.com/user-attachments/assets/59ff0617-c43d-4c41-a72b-0143d498af60)
+
 
 <br>
 
