@@ -21,10 +21,12 @@
 <br>
 - 업로드한 책을 구성하는 챕터들을 '점'으로 만들고, 목차 순서에 상관 없이 연관된 내용의 챕터끼리 '선'으로 연결하여 책의 전체적인 구조를 보여줍니다.
 <br>
+
 ![챕터요약제공 도식](https://github.com/user-attachments/assets/e55d6b75-5175-44bb-9682-9a4bf74e1242)
 <br>
 - 챕터의 요약 및 중요 키워드를 보여줍니다.
 <br>
+
 ![챗봇구현 도식](https://github.com/user-attachments/assets/f35d1cba-a1a0-4a1d-abd4-49c269463ccb)
 <br>
 - 업로드한 책의 내용을 참조하여 답변해주는 ai 챗봇 기능을 제공합니다.
