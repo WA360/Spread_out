@@ -1,17 +1,24 @@
-# 연관 페이지 추천 기능을 가진 PDF 뷰어 Spread out
+# 책 내용을 구조화하여 제공해주는 PDF 뷰어 Spread out
 
 - 배포URL : 
 
 <br>
 
 ## 프로젝트 소개
-
-
+책의 전체 내용을 연관된 챕터끼리 구조화하여 효율적으로 머릿속에 저장될 수 있도록 해주는 pdf 뷰어입니다.
+<img width="629" alt="image" src="https://github.com/user-attachments/assets/131f09d4-efff-4694-9418-396c3ef396f6">
+- 업로드한 책을 구성하는 챕터들을 '점'으로 만들고, 목차 순서에 상관 없이 연관된 내용의 챕터끼리 선으로 연결하여 책의 전체적인 구조를 보여줍니다.
+- 업로드한 책의 내용을 참조하여 답변해주는 ai 챗봇 기능을 제공합니다.
 <br>
 
 ## 팀원 구성
 
 <div align="center">
+
+|:------:|:----:|:----:|
+| ![강용제_사진](https://github.com/user-attachments/assets/da8b55b3-ca46-4b76-bf14-95b8f4a7d6e0) | ![김아람_사진](https://github.com/user-attachments/assets/22540156-a7af-4999-9cff-e1c87c765be5) | ![박정환_사진](https://github.com/user-attachments/assets/2fc1f1d3-71f7-486b-b311-72b6d5222bd8) |
+| 강용제 | 김아람 | 박정환 |
+| 리더 | 프론트 | 백엔드 |
 
 </div>
 
@@ -51,20 +58,8 @@
 
 ### 브랜치 전략
 
-- Git-flow 전략을 기반으로 main, develop 브랜치와 feature 보조 브랜치를 운용했습니다.
-- main, develop, Feat 브랜치로 나누어 개발을 하였습니다.
-    - **main** 브랜치는 배포 단계에서만 사용하는 브랜치입니다.
-    - **develop** 브랜치는 개발 단계에서 git-flow의 master 역할을 하는 브랜치입니다.
-    - **Feat** 브랜치는 기능 단위로 독립적인 개발 환경을 위하여 사용하고 merge 후 각 브랜치를 삭제해주었습니다.
-
-<br>
-
-## 프로젝트 구조
-
-```
-├── README.md
-
-```
+- 프론트, 백, 챗봇서버, 업로드 서버 각각의 레포지토리를 만들고, 기능 별 브랜치를 만들어 작업하였습니다.
+- 프론트, 백 간 역할이 모호한 경우가 많았기 때문에 위와 같은 전략을 사용하여 레포지토리간 빠르게 적응하여 작업할 수 있는 방법을 채택하였습니다.
 
 <br>
 
@@ -77,6 +72,8 @@
 - **API개발**
 
 - **기획**
+
+- **프론트엔드**
 
 <br>
 
@@ -98,15 +95,12 @@
 ### 개발 기간
 
 - 전체 개발 기간 : 2024-06-28 ~ 2022-07-28
-- UI 구현 : 
-- 기능 구현 : 
 
 <br>
 
 ### 작업 관리
 
-- GitHub Projects와 Issues를 사용하여 진행 상황을 공유했습니다.
-- 주간회의를 진행하며 작업 순서와 방향성에 대한 고민을 나누고 GitHub Wiki에 회의 내용을 기록했습니다.
+- GoogleSpreadsheet로 간트차트를 만들어 기록하였습니다. [링크](https://docs.google.com/spreadsheets/d/1LBbtSqFAAMMCywpo4yHLF9gwZQTe6Wz7mb-YO_833oo/edit?usp=sharing)
 
 <br>
 
