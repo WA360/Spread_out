@@ -46,7 +46,7 @@
 | ![강용제_사진](https://github.com/user-attachments/assets/da8b55b3-ca46-4b76-bf14-95b8f4a7d6e0) | ![김아람_사진](https://github.com/user-attachments/assets/22540156-a7af-4999-9cff-e1c87c765be5) | ![박정환_사진](https://github.com/user-attachments/assets/2fc1f1d3-71f7-486b-b311-72b6d5222bd8) |
 |:------:|:----:|:----:|
 | 강용제 | 김아람 | 박정환 |
-| 리더 | 프론트 | 백엔드 |
+| 리더, 프론트엔드, 백엔드, AI | 프론트엔드, D3 | 백엔드, 챗봇, CI/CD |
 
 </div>
 
