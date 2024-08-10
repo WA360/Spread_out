@@ -127,9 +127,9 @@
 
 <br>
 
-## 8. 트러블 슈팅
+## 아키텍처
+![아키텍쳐이미지](https://github.com/user-attachments/assets/d4b0480b-a841-4fc7-bed5-153f27ec5ad3)
 
-링크 첨부예정
 <br>
 
 ## 개선할 사항
